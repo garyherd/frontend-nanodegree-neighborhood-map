@@ -1,23 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Gary's Neighborhood Picks</title>
+        <title>Gary's Neighborhood</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--<link href="css/style.css" rel="stylesheet">-->
+        <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
         <style>
-            html, body {
+            html,
+            body {
                 height: 100%;
                 margin: 0;
                 padding: 0;
             }
+
             #map {
                 height: 100%;
             }
         </style>
     </head>
     <body>
-        <div id="map"></div>
+        <nav class="w3-sidenav w3-collapse w3-black" style="width:200px" id="mySidenav">
+            <h4>Gary's Picks</h2>
+            <a href="#" onclick="w3_close()" class="w3-closenav w3-hide-large">Close &times;</a>
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+        </nav>
+
+        <div class="w3-main" style="margin-left:200px; height:100%">
+            <span class="w3-opennav w3-hide-large" onclick="w3_open()">&#9776;</span>
+            <div id="map"></div>
+        </div>
         <script>
             var map;
             function initMap() {
@@ -27,9 +41,23 @@
                 });
             }
         </script>
-        <script
-            src="http://maps.googleapis.com/maps/api/js?v=3&libraries=places&key=AIzaSyA9-MnSFxxgA2YmftC13tx6wLZmXhOOZPE&callback=initMap"
-            async defer>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9-MnSFxxgA2YmftC13tx6wLZmXhOOZPE&callback=initMap" async
+            defer></script>
+
+        <!-- Knockout v3.3 -->
+        <script async src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
+
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <script>
+            function w3_open() {
+            document.getElementById("mySidenav").style.display = "block";
+            }
+            function w3_close() {
+            document.getElementById("mySidenav").style.display = "none";
+            }
         </script>
+
     </body>
 </html>
