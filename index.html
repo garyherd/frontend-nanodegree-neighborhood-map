@@ -1,63 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Gary's Neighborhood</title>
+        <title>Gary's Houston Picks</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--<link href="css/style.css" rel="stylesheet">-->
-        <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-        <style>
-            html,
-            body {
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
-
-            #map {
-                height: 100%;
-            }
-        </style>
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/w3.css" rel="stylesheet" >
     </head>
     <body>
-        <nav class="w3-sidenav w3-collapse w3-black" style="width:200px" id="mySidenav">
-            <h4>Gary's Picks</h2>
+        <nav class="w3-sidenav w3-collapse w3-black w3-padding-small" id="mySidenav">
+            <h4>Gary's Houston Picks</h2>
             <a href="#" onclick="w3_close()" class="w3-closenav w3-hide-large">Close &times;</a>
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+            <!--<select data-bind="foreach: dropdownListItems" class="w3-select w3-border" id="option">
+                <option data-bind="text: name" value="text: name"></option>
+            </select>-->
+            <select data-bind="options: availableLocationsList,
+                               optionsText: 'name',
+                               value: selectedLocation,
+                               optionsCaption: 'All Locations'" class="w3-select w3-border">
+            </select>
+            <div data-bind="foreach: displayedLocationsList">
+                <a href="#" data-bind="text: name"></a>
+            </div>
         </nav>
 
-        <div class="w3-main" style="margin-left:200px; height:100%">
-            <span class="w3-opennav w3-hide-large" onclick="w3_open()">&#9776;</span>
+        <div class="w3-main w3-black" id="main">
+            <span id="hamburger" class="w3-opennav w3-hide-large" onclick="w3_open()">&#9776;</span>
             <div id="map"></div>
         </div>
-        <script>
-            var map;
-            function initMap() {
-                map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -34.397, lng: 150.644},
-                zoom: 8
-                });
-            }
-        </script>
+
+        <!-- Google Maps API -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9-MnSFxxgA2YmftC13tx6wLZmXhOOZPE&callback=initMap" async
             defer></script>
 
         <!-- Knockout v3.3 -->
-        <script async src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
 
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-        <script>
-            function w3_open() {
-            document.getElementById("mySidenav").style.display = "block";
-            }
-            function w3_close() {
-            document.getElementById("mySidenav").style.display = "none";
-            }
-        </script>
-
+        <!--App File-->
+        <script src="js/app.js"></script>
     </body>
 </html>

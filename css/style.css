@@ -1,0 +1,23 @@
+#hamburger {
+    font-size: 25px;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#main {
+    margin-left: 200px;
+    height: 100%;
+}
+
+#map {
+    height: 100%;
+}
+
+#mySidenav {
+    width: 200px;
+}
