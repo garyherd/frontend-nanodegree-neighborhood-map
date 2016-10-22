@@ -29,6 +29,8 @@ function placeMarkers(locArray) {
         deleteMarkers();
     }
 
+    var bounds = new google.maps.LatLngBounds();
+
     // The following group uses the location array to create an array of
     // markers.
     for (var i = 0; i < locArray.length; i++) {
@@ -52,7 +54,9 @@ function placeMarkers(locArray) {
 
         // Push the marker to our array of markers.
         markers.push(marker);
+        bounds.extend(marker.position);
     };
+    map.fitBounds(bounds);
 };
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
@@ -64,7 +68,6 @@ function populateInfoWindow(marker, infowindow) {
         infowindow.marker = marker;
         infowindow.setContent('<div style="color:black">' + marker.title + '</div>');
         infowindow.open(map, marker);
-        console.log(infowindow.getContent());
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick', function () {
             infowindow.setMarker(null);
