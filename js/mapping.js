@@ -1,4 +1,5 @@
 var map;
+var largeInfoWindow;
 var markers = [];
 var locations = [
     {name: "Bellagio Apts", location: {lat: 29.888504, lng: -95.5501487}},
@@ -9,21 +10,11 @@ var locations = [
     {name: "Bear Creek Pioneers Park", location: {lat: 29.827242, lng: -95.614142}}
 ];
 
-// Sets the map on all markers in the array.
-function setMapOnAll(map) {
-    for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(map);
-    }
-}
-
 // Removes the markers from the map, but keeps them in the array.
 function clearMarkers() {
-    setMapOnAll(null);
-}
-
-// Shows any markers currently in the array.
-function showMarkers() {
-    setMapOnAll(map);
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
 }
 
 // Deletes all markers in the array by removing references to them.
@@ -37,9 +28,11 @@ function placeMarkers(locArray) {
     if (markers.length > 0) {
         deleteMarkers();
     }
+
     // The following group uses the location array to create an array of
-    // markers on initialize.
+    // markers.
     for (var i = 0; i < locArray.length; i++) {
+
         // Get the position from the location array
         var position = locArray[i].location;
         var title = locArray[i].name;
@@ -51,19 +44,39 @@ function placeMarkers(locArray) {
             animation: google.maps.Animation.DROP,
             id: i
         });
+
+        // Create an onclick event to open an infoWindow at each marker
+        marker.addListener('click', function () {
+            populateInfoWindow(this, largeInfoWindow);
+        });
+
         // Push the marker to our array of markers.
         markers.push(marker);
-        // Create an onclick event to open an infoWindow at each marker
-        // marker.addListener('click', function () {
-        //     populateInfoWindow(this, largeInfoWindow);
-        // });
     };
 };
+
+// This function populates the infowindow when the marker is clicked. We'll only allow
+// one infowindow which will open at the marker that is clicked, and poulate based
+// on that markers position.
+function populateInfoWindow(marker, infowindow) {
+    // check to make sure the infowindow is not already opened on this marker.
+    if (infowindow.marker != marker) {
+        infowindow.marker = marker;
+        infowindow.setContent('<div style="color:black">' + marker.title + '</div>');
+        infowindow.open(map, marker);
+        console.log(infowindow.getContent());
+        // Make sure the marker property is cleared if the infowindow is closed.
+        infowindow.addListener('closeclick', function () {
+            infowindow.setMarker(null);
+        });
+    }
+}
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 29.757974, lng: -95.374924 },
         zoom: 10
     });
+    largeInfoWindow = new google.maps.InfoWindow();
     placeMarkers(locations);
 };
