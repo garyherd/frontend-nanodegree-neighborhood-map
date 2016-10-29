@@ -50,6 +50,7 @@ function placeMarkers(locArray) {
         // Create an onclick event to open an infoWindow at each marker
         marker.addListener('click', function () {
             populateInfoWindow(this, largeInfoWindow);
+            bounceMarker(this);
         });
 
         // Push the marker to our array of markers.
@@ -63,16 +64,60 @@ function placeMarkers(locArray) {
 // one infowindow which will open at the marker that is clicked, and poulate based
 // on that markers position.
 function populateInfoWindow(marker, infowindow) {
+
     // check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
-        infowindow.setContent('<div style="color:black">' + marker.title + '</div>');
+        getFourSquareInfo(infowindow, createInfoWindowContent, createDefaultInfoWindowContent);
         infowindow.open(map, marker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick', function () {
-            infowindow.setMarker(null);
+            infowindow.marker = null
         });
     }
+}
+
+function getFourSquareInfo(infowindow, successFunc, errorFunc) {
+    var self = this;
+    var resultStr;
+    var fsquareUrl = "https://api.foursquare!.com/v2/venues/search?ll="
+    + infowindow.marker.getPosition().lat() + "," + infowindow.marker.getPosition().lat()
+    + "&client_id=JE3Z0E1BTGQ5H4KPVTMBBKDFK000WAAAO21FMQIW3ZIV2WBW"
+    + "&client_secret=ZJMZH553AONNR5RFOE5QZOBZBOP0GAOJLWEF2H5OC1IPRCJK&v=20161026";
+
+
+    $.ajax({
+        url: fsquareUrl,
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            // successFunc(infowindow, response);
+        },
+        error: function (xhr) {
+            errorFunc(infowindow);
+        }
+    });
+}
+
+function createInfoWindowContent(infowindow, response){
+    var resultStr = '<div style="color:black">Title: '+ 'success' + '</div>'
+    + '<div style="color:black">Phone: 555-555-5555</div>'
+    + '<div style="color:black">Web: www.stuff.com</div>'
+    + '<br>'
+    + '<a href="www.foursquare.com">See more at Four Square</a>';
+    // infowindow.setContent(resultStr);
+    console.log(response.statusCode());
+}
+
+function createDefaultInfoWindowContent(infowindow) {
+    window.alert("Error function reached");
+    infowindow.setContent('<div style="color:black">' + infowindow.marker.getTitle() + '</div>'
+    + '<div style="color:black">No further info available from FourSquare. Sorry :(');
+}
+
+function bounceMarker(marker) {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    window.setTimeout(function() {marker.setAnimation(null);},2000);
 }
 
 function initMap() {

@@ -16,7 +16,24 @@ var navViewModel = function() {
             placeMarkers(self.displayedLocations());
         }
     });
+
+    this.bounceMarker = function(location) {
+        var marker = findMarkerByName(location.name);
+        populateInfoWindow(marker, largeInfoWindow);
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        window.setTimeout(function() {marker.setAnimation(null);},2000);
+    };
 };
+
+function findMarkerByName(locStr) {
+    var foundMarker;
+    markers.forEach(function(marker) {
+        if (marker.getTitle() == locStr) {
+            foundMarker = marker;
+        }
+    }, this);
+    return foundMarker;
+}
 
 
 function w3_open() {
