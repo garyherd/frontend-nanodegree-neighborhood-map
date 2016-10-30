@@ -9,8 +9,9 @@ The Foursquare API was also used to provide content to the pop-box when a user c
 ## Installation
 Clone this project to your machine
 
-`$ git clone https://github.com/garyherd/front-end-nanodegree-arcade-game.git`
+`https://github.com/garyherd/frontend-nanodegree-neighborhood-map.git`
 
 ## Attributions
 * [Google Maps API](https://developers.google.com/maps/documentation/javascript/)
 * [Foursquare API](https://developer.foursquare.com/)
+* [W3.CSS Framework](http://www.w3schools.com/w3css/default.asp)
