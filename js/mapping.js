@@ -119,7 +119,8 @@ function createInfoWindowContent(iwObj, infowindow){
     var targetKeys = ["formattedPhone", "twitter", "facebookUsername"];
     var keyUrls = {formattedPhone: "", twitter: "https://twitter.com/",
         facebookUsername: "https://facebook.com/"};
-    var resultStr = '<div style="color:black">From Foursquare:</div><div style="color:black"><b>'+ iwObj.name + '</b></div><br>';
+    var resultStr = '<div style="color:black">From Foursquare:</div><div style="color:black"><b>'
+        + iwObj.name + '</b></div><br>';
 
     $.each(iwObj.contactInfo, function(key, value) {
         if (targetKeys.indexOf(key) > -1) {
