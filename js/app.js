@@ -43,6 +43,15 @@ function w3_open() {
 function w3_close() {
     document.getElementById("mySidenav").style.display = "none";
 };
+try {
+    ko.applyBindings(new navViewModel());
+} catch (error) {
+    window.alert("There is a problem with the application. Please try again later.")
+}
 
-ko.applyBindings(new navViewModel());
+function displayErrorMessage() {
+    window.alert("There was a problem with Google Maps. Please close this page from the browswer and try again later");
+}
+
+
 

@@ -111,7 +111,7 @@ function createInfoWindowContent(iwObj, infowindow){
     var targetKeys = ["formattedPhone", "twitter", "facebookUsername"];
     var keyUrls = {formattedPhone: "", twitter: "https://twitter.com/",
         facebookUsername: "https://facebook.com/"};
-    var resultStr = '<div style="color:black"><b>'+ iwObj.name + '</b></div><br>';
+    var resultStr = '<div style="color:black">From Foursquare:</div><div style="color:black"><b>'+ iwObj.name + '</b></div><br>';
 
     $.each(iwObj.contactInfo, function(key, value) {
         if (targetKeys.indexOf(key) > -1) {
@@ -139,7 +139,7 @@ function createInfoWindowContent(iwObj, infowindow){
 function createDefaultInfoWindowContent(infowindow) {
     infowindow.setContent('<div style="color:black">'
         + infowindow.marker.getTitle() + '</div>'
-        + '<div style="color:black">No further info available from FourSquare. Sorry :(');
+        + '<div style="color:black">There was a problem reaching Foursquare. Please try again later :(');
 }
 
 function bounceMarker(marker) {
@@ -148,10 +148,16 @@ function bounceMarker(marker) {
 }
 
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 29.757974, lng: -95.374924 },
-        zoom: 10
-    });
-    largeInfoWindow = new google.maps.InfoWindow();
-    placeMarkers(locations);
+    try {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 29.757974, lng: -95.374924 },
+            zoom: 10
+        });
+        largeInfoWindow = new google.maps.InfoWindow();
+        placeMarkers(locations);
+
+    } catch (error) {
+        window.alert("There was a problem contacting Google Maps. Please try again later.");
+        console.log("Error on initMap: " + error.toString());
+    }
 }
