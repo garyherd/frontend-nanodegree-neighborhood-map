@@ -23,6 +23,7 @@ function deleteMarkers() {
     markers = [];
 }
 
+// Creates markers, InfoWindows, and event listeners using the Google Maps API
 function placeMarkers(locArray) {
 
     if (markers.length > 0) {
@@ -63,14 +64,19 @@ function placeMarkers(locArray) {
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and poulate based
 // on that markers position.
+
 function populateInfoWindow(marker, infowindow) {
 
     // check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
+
+        // Callback functions provided for ajax call.
         getFourSquareInfo(infowindow, createInfoWindowContent,
             createDefaultInfoWindowContent);
+
         infowindow.open(map, marker);
+
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick', function () {
             infowindow.marker = null
@@ -78,6 +84,8 @@ function populateInfoWindow(marker, infowindow) {
     }
 }
 
+// Gets info from the Foursquare API by sending lat/long coordinates.
+// Callback functions provided for successful and failed responses from API
 function getFourSquareInfo(infowindow, successFunc, errorFunc) {
     var self = this;
     var resultStr;
@@ -147,6 +155,7 @@ function bounceMarker(marker) {
     window.setTimeout(function() {marker.setAnimation(null);},2000);
 }
 
+// Initialize map. Provides error handing in case of problem with request
 function initMap() {
     try {
         map = new google.maps.Map(document.getElementById('map'), {

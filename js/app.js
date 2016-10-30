@@ -1,3 +1,5 @@
+// Knockout ViewModel that handles displaying initial list of locations,
+// and the interacting with the dropdown list
 var navViewModel = function() {
     var self = this;
     this.availableLocationsList = locations.slice();
@@ -25,6 +27,8 @@ var navViewModel = function() {
     };
 };
 
+// Helper functions
+
 function findMarkerByName(locStr) {
     var foundMarker;
     markers.forEach(function(marker) {
@@ -35,7 +39,6 @@ function findMarkerByName(locStr) {
     return foundMarker;
 }
 
-
 function w3_open() {
     document.getElementById("mySidenav").style.display = "block";
 };
@@ -43,15 +46,19 @@ function w3_open() {
 function w3_close() {
     document.getElementById("mySidenav").style.display = "none";
 };
+
+function displayErrorMessage() {
+    window.alert("There was a problem with Google Maps. Please close this page from your browser and try again later");
+}
+
+// Initiate ViewModel and display error message if maps.googleapis.com doesn't load
 try {
     ko.applyBindings(new navViewModel());
 } catch (error) {
     window.alert("There is a problem with the application. Please try again later.")
 }
 
-function displayErrorMessage() {
-    window.alert("There was a problem with Google Maps. Please close this page from your browser and try again later");
-}
+
 
 
 
