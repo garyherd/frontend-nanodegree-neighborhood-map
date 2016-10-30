@@ -108,10 +108,11 @@ function getFourSquareInfo(infowindow, successFunc, errorFunc) {
 }
 
 function createInfoWindowContent(iwObj, infowindow){
-    var targetKeys = ["formattedPhone", "twitter", "facebookUsername"]
+    var targetKeys = ["formattedPhone", "twitter", "facebookUsername"];
     var keyUrls = {formattedPhone: "", twitter: "https://twitter.com/",
-        facebookUsername: "https://facebook.com/"}
-    var resultStr = '<div style="color:black"><b>'+ iwObj.name + '</b></div><br>'
+        facebookUsername: "https://facebook.com/"};
+    var resultStr = '<div style="color:black"><b>'+ iwObj.name + '</b></div><br>';
+
     $.each(iwObj.contactInfo, function(key, value) {
         if (targetKeys.indexOf(key) > -1) {
             if (key == "formattedPhone") {
@@ -121,15 +122,16 @@ function createInfoWindowContent(iwObj, infowindow){
                     + value.toString() + '</div>';
             } else {
                 resultStr += '<div style="color:black"><b>'
-                    + key + ':&nbsp;<a style="color:blue" href="'
+                    + key + ':&nbsp;<a style="color:blue" target="_blank" href="'
                     + keyUrls[key].toString() + value.toString() + '">'
                     + value.toString() + '</a></div>';
             }
         };
     });
-    resultStr += '<br><a style="color:blue" href="'
+
+    resultStr += '<br><a style="color:blue" target="_blank" href="'
         + iwObj.foursquareUrl + '">See more at FourSquare</a>';
-    var replacedPhone = resultStr.replace("formattedPhone", "Phone");
+    var replacedPhone = resultStr.replace("formattedPhone", "phone");
     var finalResultStr = replacedPhone.replace("facebookUsername", "facebook");
     infowindow.setContent(finalResultStr);
 }
@@ -152,4 +154,4 @@ function initMap() {
     });
     largeInfoWindow = new google.maps.InfoWindow();
     placeMarkers(locations);
-};
+}
