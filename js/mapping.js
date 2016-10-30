@@ -68,7 +68,8 @@ function populateInfoWindow(marker, infowindow) {
     // check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
-        getFourSquareInfo(infowindow, createInfoWindowContent, createDefaultInfoWindowContent);
+        getFourSquareInfo(infowindow, createInfoWindowContent,
+            createDefaultInfoWindowContent);
         infowindow.open(map, marker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick', function () {
@@ -84,7 +85,8 @@ function getFourSquareInfo(infowindow, successFunc, errorFunc) {
     $.ajax({
         url: "https://api.foursquare.com/v2/venues/search",
         data: {
-            ll: infowindow.marker.getPosition().lat().toString() + "," + infowindow.marker.getPosition().lng().toString(),
+            ll: infowindow.marker.getPosition().lat().toString() + ","
+                + infowindow.marker.getPosition().lng().toString(),
             client_id: "JE3Z0E1BTGQ5H4KPVTMBBKDFK000WAAAO21FMQIW3ZIV2WBW",
             client_secret: "ZJMZH553AONNR5RFOE5QZOBZBOP0GAOJLWEF2H5OC1IPRCJK",
             v: '20161026'
@@ -107,27 +109,35 @@ function getFourSquareInfo(infowindow, successFunc, errorFunc) {
 
 function createInfoWindowContent(iwObj, infowindow){
     var targetKeys = ["formattedPhone", "twitter", "facebookUsername"]
-    var keyUrls = {formattedPhone: "", twitter: "https://twitter.com/", facebookUsername: "https://facebook.com/"}
+    var keyUrls = {formattedPhone: "", twitter: "https://twitter.com/",
+        facebookUsername: "https://facebook.com/"}
     var resultStr = '<div style="color:black"><b>'+ iwObj.name + '</b></div><br>'
     $.each(iwObj.contactInfo, function(key, value) {
-        console.log(key, value);
         if (targetKeys.indexOf(key) > -1) {
             if (key == "formattedPhone") {
-                resultStr += '<div style="color:black"><b>' + key + '</b>:&nbsp;' + keyUrls[key].toString() + value.toString() + '</div>';
+                resultStr += '<div style="color:black"><b>'
+                    + key + '</b>:&nbsp;'
+                    + keyUrls[key].toString()
+                    + value.toString() + '</div>';
             } else {
-                resultStr += '<div style="color:black"><b>' + key + ':&nbsp;<a style="color:blue" href="' + keyUrls[key].toString() + value.toString() + '">' + value.toString() + '</a></div>';
+                resultStr += '<div style="color:black"><b>'
+                    + key + ':&nbsp;<a style="color:blue" href="'
+                    + keyUrls[key].toString() + value.toString() + '">'
+                    + value.toString() + '</a></div>';
             }
         };
     });
-    resultStr += '<br><a style="color:blue" href="' + iwObj.foursquareUrl + '">See more at FourSquare</a>';
+    resultStr += '<br><a style="color:blue" href="'
+        + iwObj.foursquareUrl + '">See more at FourSquare</a>';
     var replacedPhone = resultStr.replace("formattedPhone", "Phone");
     var finalResultStr = replacedPhone.replace("facebookUsername", "facebook");
     infowindow.setContent(finalResultStr);
 }
 
 function createDefaultInfoWindowContent(infowindow) {
-    infowindow.setContent('<div style="color:black">' + infowindow.marker.getTitle() + '</div>'
-    + '<div style="color:black">No further info available from FourSquare. Sorry :(');
+    infowindow.setContent('<div style="color:black">'
+        + infowindow.marker.getTitle() + '</div>'
+        + '<div style="color:black">No further info available from FourSquare. Sorry :(');
 }
 
 function bounceMarker(marker) {
