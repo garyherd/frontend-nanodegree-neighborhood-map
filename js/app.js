@@ -50,7 +50,7 @@ try {
 }
 
 function displayErrorMessage() {
-    window.alert("There was a problem with Google Maps. Please close this page from the browswer and try again later");
+    window.alert("There was a problem with Google Maps. Please close this page from your browser and try again later");
 }
 
 
