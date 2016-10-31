@@ -9,7 +9,7 @@
     </head>
     <body>
         <nav class="w3-sidenav w3-collapse w3-black w3-padding-small" id="mySidenav">
-            <h4>Gary's Houston Picks</h2>
+            <h4>Gary's Houston Picks</h4>
             <a href="#" onclick="w3_close()" class="w3-closenav w3-hide-large">Close&nbsp;&nbsp;&times;</a>
             <br>
             <select data-bind="options: availableLocationsList,
@@ -33,12 +33,12 @@
         <!-- Knockout v3.3 -->
         <script src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js"></script>
 
-        <!-- Google Maps API -->
+        <!--App Files-->
         <script src="js/mapping.js"></script>
+        <script src="js/app.js"></script>
+
+        <!-- Google Maps API -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9-MnSFxxgA2YmftC13tx6wLZmXhOOZPE&callback=initMap" async
             defer onerror="displayErrorMessage()"></script>
-
-        <!--App File-->
-        <script src="js/app.js"></script>
     </body>
 </html>

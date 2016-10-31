@@ -13,7 +13,7 @@ var navViewModel = function() {
             placeMarkers(self.displayedLocations());
         }
 
-        if (self.selectedLocation() == undefined) {
+        if (self.selectedLocation() === undefined) {
             self.displayedLocations(self.availableLocationsList.slice());
             placeMarkers(self.displayedLocations());
         }
@@ -23,7 +23,7 @@ var navViewModel = function() {
         var marker = findMarkerByName(location.name);
         populateInfoWindow(marker, largeInfoWindow);
         marker.setAnimation(google.maps.Animation.BOUNCE);
-        window.setTimeout(function() {marker.setAnimation(null);},2000);
+        window.setTimeout(function() {marker.setAnimation(null);},1400);
     };
 };
 
@@ -41,11 +41,11 @@ function findMarkerByName(locStr) {
 
 function w3_open() {
     document.getElementById("mySidenav").style.display = "block";
-};
+}
 
 function w3_close() {
     document.getElementById("mySidenav").style.display = "none";
-};
+}
 
 function displayErrorMessage() {
     window.alert("There was a problem with Google Maps. Please close this page from your browser and try again later");
@@ -55,7 +55,7 @@ function displayErrorMessage() {
 try {
     ko.applyBindings(new navViewModel());
 } catch (error) {
-    window.alert("There is a problem with the application. Please try again later.")
+    window.alert("There is a problem with the application. Please try again later.");
 }
 
 
