@@ -1,14 +1,6 @@
 var map;
 var largeInfoWindow;
 var markers = [];
-// var locations = [
-//     {name: 'Bellagio Apts', location: {lat: 29.888504, lng: -95.54796}, type: 'Apartments'},
-//     {name: "Rudy's BBQ", location: {lat: 29.866844, lng: -95.538356}, type: 'Restaurants'},
-//     {name: 'George Bush Park', location: {lat: 29.7196437, lng: -95.686953}, type: 'Parks'},
-//     {name: 'Memorial Park', location: {lat: 29.764992, lng: -95.4373088}, type: 'Parks'},
-//     {name: 'Hermann Park', location: {lat: 29.7183503, lng: -95.3908764}, type: 'Parks'},
-//     {name: 'Bear Creek Pioneers Park', location: {lat: 29.827242, lng: -95.614142}, type: 'Parks'}
-// ];
 var availableLocationsByType = [
     {
         locations: [
@@ -33,6 +25,8 @@ var availableLocationsByType = [
     }
 ];
 
+// takes an array of one or more objects (locations & type are keys) and
+// returns an array of locations only.
 function createLocationsArray(locationObjArray) {
     var locList = [];
     locationObjArray.forEach(function(element) {
@@ -40,8 +34,8 @@ function createLocationsArray(locationObjArray) {
             if (key === 'locations') {
                 value.forEach(function(locObj) {
                     locList.push(locObj);
-                })
-            };
+                });
+            }
         });
     }, this);
     return locList;
@@ -124,8 +118,6 @@ function populateInfoWindow(marker, infowindow) {
 // Gets info from the Foursquare API by sending lat/long coordinates.
 // Callback functions provided for successful and failed responses from API
 function getFourSquareInfo(infowindow, successFunc, errorFunc, emptyFunc) {
-    var self = this;
-    var resultStr;
 
     $.ajax({
         url: "https://api.foursquare.com/v2/venues/search",
