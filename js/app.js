@@ -2,19 +2,24 @@
 // and the interacting with the dropdown list
 var navViewModel = function() {
     var self = this;
-    this.availableLocationsList = locations.slice();
+    // this.availableLocationsList = locations.slice();
+    this.selectedType = ko.observable();
     this.selectedLocation = ko.observable();
-    this.displayedLocations = ko.observableArray(locations);
+    this.displayedLocations = ko.observableArray(createLocationsArray(availableLocationsByType));
 
-    this.selectedLocation.subscribe(function() {
+    this.selectedType.subscribe(function() {
         self.displayedLocations.removeAll();
-        if (self.selectedLocation()) {
-            self.displayedLocations.push(self.selectedLocation());
+        var locList = [];
+        var singleTypeArray = [];
+        if (self.selectedType() === undefined) {
+            locList = createLocationsArray(availableLocationsByType);
+            self.displayedLocations(locList);
             placeMarkers(self.displayedLocations());
         }
 
-        if (self.selectedLocation() === undefined) {
-            self.displayedLocations(self.availableLocationsList.slice());
+        if (self.selectedType()) {
+            singleTypeArray.push(self.selectedType());
+            self.displayedLocations(createLocationsArray(singleTypeArray));
             placeMarkers(self.displayedLocations());
         }
     });
@@ -55,7 +60,7 @@ function displayErrorMessage() {
 try {
     ko.applyBindings(new navViewModel());
 } catch (error) {
-    window.alert("There is a problem with the application. Please try again later.");
+    window.alert("There is a problem initializing the application. Please try again later.");
 }
 
 

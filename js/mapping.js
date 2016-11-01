@@ -1,14 +1,51 @@
 var map;
 var largeInfoWindow;
 var markers = [];
-var locations = [
-    {name: 'Bellagio Apts', location: {lat: 29.888504, lng: -95.54796}, type: 'Apartments'},
-    {name: "Rudy's BBQ", location: {lat: 29.866844, lng: -95.538356}, type: 'Restaurants'},
-    {name: 'George Bush Park', location: {lat: 29.7196437, lng: -95.686953}, type: 'Parks'},
-    {name: 'Memorial Park', location: {lat: 29.764992, lng: -95.4373088}, type: 'Parks'},
-    {name: 'Hermann Park', location: {lat: 29.7183503, lng: -95.3908764}, type: 'Parks'},
-    {name: 'Bear Creek Pioneers Park', location: {lat: 29.827242, lng: -95.614142}, type: 'Parks'}
+// var locations = [
+//     {name: 'Bellagio Apts', location: {lat: 29.888504, lng: -95.54796}, type: 'Apartments'},
+//     {name: "Rudy's BBQ", location: {lat: 29.866844, lng: -95.538356}, type: 'Restaurants'},
+//     {name: 'George Bush Park', location: {lat: 29.7196437, lng: -95.686953}, type: 'Parks'},
+//     {name: 'Memorial Park', location: {lat: 29.764992, lng: -95.4373088}, type: 'Parks'},
+//     {name: 'Hermann Park', location: {lat: 29.7183503, lng: -95.3908764}, type: 'Parks'},
+//     {name: 'Bear Creek Pioneers Park', location: {lat: 29.827242, lng: -95.614142}, type: 'Parks'}
+// ];
+var availableLocationsByType = [
+    {
+        locations: [
+            {name: 'Bellagio Apts', location: {lat: 29.888504, lng: -95.54796}}
+        ],
+        type: 'Apartments'
+    },
+    {
+        locations: [
+            {name: "Rudy's BBQ", location: {lat: 29.866844, lng: -95.538356}}
+        ],
+        type: 'Restaurants'
+    },
+    {
+        locations: [
+            {name: 'George Bush Park', location: {lat: 29.7196437, lng: -95.686953}},
+            {name: 'Memorial Park', location: {lat: 29.764992, lng: -95.4373088}},
+            {name: 'Hermann Park', location: {lat: 29.7183503, lng: -95.3908764}},
+            {name: 'Bear Creek Pioneers Park', location: {lat: 29.827242, lng: -95.614142}},
+        ],
+        type: 'Parks'
+    }
 ];
+
+function createLocationsArray(locationObjArray) {
+    var locList = [];
+    locationObjArray.forEach(function(element) {
+        $.each(element, function (key, value) {
+            if (key === 'locations') {
+                value.forEach(function(locObj) {
+                    locList.push(locObj);
+                })
+            };
+        });
+    }, this);
+    return locList;
+}
 
 // Removes the markers from the map, but keeps them in the array.
 function clearMarkers() {
@@ -174,7 +211,7 @@ function initMap() {
             zoom: 10
         });
         largeInfoWindow = new google.maps.InfoWindow();
-        placeMarkers(locations);
+        placeMarkers(createLocationsArray(availableLocationsByType));
 
     } catch (error) {
         window.alert("There was a problem contacting Google Maps. Please try again later.");

@@ -12,13 +12,32 @@
             <h4>Gary's Houston Picks</h4>
             <a href="#" onclick="w3_close()" class="w3-closenav w3-hide-large">Close&nbsp;&nbsp;&times;</a>
             <br>
-            <select data-bind="options: availableLocationsList,
+            <!--<select data-bind="options: availableLocationsList,
                                optionsText: 'name',
                                value: selectedLocation,
                                optionsCaption: 'All Locations'" class="w3-select w3-border">
+            </select>-->
+            <select data-bind="options: availableLocationsByType,
+                               optionsText: 'type',
+                               value: selectedType,
+                               optionsCaption: 'All Locations'" class="w3-select w3-border">
             </select>
-            <div data-bind="foreach: displayedLocations">
+            <!--<div data-bind="foreach: displayedLocations">
                 <a href="#" data-bind="text: name, click: $root.bounceMarker"></a>
+            </div>-->
+
+            <!-- ko if: selectedType() === undefined  -->
+                <div data-bind="foreach: availableLocationsByType">
+                    <!-- ko foreach: locations -->
+                        <a href="#" data-bind="text: name, click: $root.bounceMarker"></a>
+                    <!-- /ko -->
+                </div>
+            <!-- /ko -->
+
+            <div data-bind="with: selectedType">
+                <div data-bind="foreach: locations">
+                    <a href="#" data-bind="text: name, click: $root.bounceMarker"></a>
+                </div>
             </div>
         </nav>
 
